@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Network Scanner</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Network Scanner</h1>
+    <button onclick="getDevices()">Scan Network</button>
+    <ul id="devices"></ul>
+
+    <script>
+        function getDevices() {
+            $.getJSON("https://raw.githubusercontent.com/<username>/<repository>/main/devices.json", function(devices) {
+                var devicesList = document.getElementById("devices");
+                devicesList.innerHTML = "";
+                for (var i = 0; i < devices.length; i++) {
+                    var device = devices[i];
+                    var deviceItem = document.createElement("li");
+                    deviceItem.innerText = device.ip + " - " + device.status;
+                    devicesList.appendChild(deviceItem);
+                }
+            }).fail(function() {
+                alert("Failed to retrieve devices.");
+            });
+        }
+    </script>
+</body>
+</html>
